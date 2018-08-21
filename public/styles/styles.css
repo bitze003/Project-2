@@ -13,6 +13,7 @@ body, #big-idea{
   color: rgb(64, 136, 245);
   font-size: 30px;
   border-radius: 50px;
+  padding-top: 10px;
 }
 #login{
   margin-top: 30px;
