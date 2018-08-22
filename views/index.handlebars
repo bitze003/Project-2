@@ -8,32 +8,17 @@
   <div class="container">
     <div class="row">
       <div class="col-8 offset-2">
-        {{!-- <h1>{{msg}}</h1>
-        <h2>What's the big idea?</h2> --}}
         <form class="clearfix mb-4" action="POST">
           <div class="form-group">
-            {{!-- <label for="example-text">What's the big idea?</label> --}}
-            <input type="text" id="big-idea" class="form-control" aria-describedby="example-text" placeholder="What's the big idea?">
+            <input type="text" id="big-idea" class="new-pitch form-control" aria-describedby="example-text" placeholder="What's the big idea?" onfocus="this.placeholder = ''">
           </div>
-          {{!-- <div class="form-group">
-            <label for="example-description">Example Description</label>
-            <textarea class="form-control" id="example-description" aria-describedby="example-description" placeholder="Enter Example Description"></textarea>
-          </div> --}}
-          <button id="submit" class="btn btn-light float-left">Submit</button>
+          <button class="submit btn btn-light float-left">Submit</button>
         </form>
-        {{!-- <h3>Examples:</h3> --}}
-        <ul id="example-list" class="list-group">
-          {{#each examples}}
-          <li data-id="{{this.id}}" class="list-group-item">
-            <a href="example/{{this.id}}">{{this.text}}</a>
-            <button class="btn btn-danger float-right delete">ｘ</button>
-          </li>
-          {{/each}}
-        </ul>
+        <span class="pitch-container"></span>
       </div>
     </div>
   </div>
 </div>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="/js/index.js"></script>
+<script src="/js/view.js"></script>
