@@ -1,13 +1,12 @@
 body, #big-idea{
   background-color: rgb(64, 136, 245);
-  border: 0;
 }
 #title{
   display: inline-block;
   margin-top: 30px;
   color: white;
 }
-.fas{
+.logo{
   margin-right: 10px;
   background-color: white;
   color: rgb(64, 136, 245);
@@ -15,15 +14,20 @@ body, #big-idea{
   border-radius: 50px;
   padding-top: 10px;
 }
+/* up and down vote buttons */
+button.up-vote, button.down-vote{
+  height: 30px;
+  width: 30px;
+}
 #login{
   margin-top: 30px;
 }
 #big-idea{
   font-family: 'Open Sans Condensed', sans-serif;
-  height: 100px;
+  height: 75px;
   font-size: 25px;
   color: white;
-  margin-top: 100px;
+  margin-top: 20px;
   border-style: solid;
   border-color: white;
   border-width: 0px 0px 2px 0px;
@@ -39,5 +43,5 @@ body, #big-idea{
 .form-control::-ms-input-placeholder { color: white; } 
 
 .list-group-item {
-  line-height: 2.5;
+  line-height: 1;
 }
