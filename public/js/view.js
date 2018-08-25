@@ -1,67 +1,96 @@
-$(document).ready(function() {
-    var $newPitchInput = $("input.new-pitch");
-    var $pitchContainer = $(".pitch-container");
-    // event listeners
-    $(document).on("click", "button.submit", insertPitch);
-    // $(document).on("click", "button.up-vote", editPitch);
-    // $(document).on("click", "button.down-vote", editPitch);
+$(document).ready(function () {
+  var $newPitchInput = $("input.new-pitch");
+  var $pitchContainer = $(".pitch-container");
+  // event listeners
+  $(document).on("click", "button.submit", insertPitch);
+  $(document).on("click", "button.up-vote", upVote);
+  $(document).on("click", "button.down-vote", downVote);
 
-    var pitches = [];
+  var pitches = [];
 
-    // start the show
-    getPitches();
+  // start the show
+  getPitches();
 
-    function initializeRows(pitches) {
-        $pitchContainer.empty();
-        var rowsToAdd = [];
-        for (var i = 0; i < pitches.length; i++) {
-            rowsToAdd.push(createNewRow(pitches[i]));
+  function initializeRows(pitches) {
+    $pitchContainer.empty();
+    var rowsToAdd = [];
+    for (var i = 0; i < pitches.length; i++) {
+      rowsToAdd.push(createNewRow(pitches[i]));
+    }
+    
+    console.log(rowsToAdd);
+    $pitchContainer.append(rowsToAdd);
+  }
+
+  function getPitches() {
+    $.get("/api/pitches", function (data) {
+      pitches = data;
+      pitches.sort(
+        function(a,b){
+          return b.score - a.score
         }
-        $pitchContainer.prepend(rowsToAdd);
-    }
+      )
+      initializeRows(pitches);
+    });
+  }
 
-    function getPitches() {
-        $.get("/api/pitches", function (data) {
-            pitches = data;
-            initializeRows(pitches);
-        });
-    }
+  function upVote(event) {
+    event.stopPropagation();
+    let updatedPitch = $(this).data();
+    updatedPitch.score += 1;
+    
+    updatePitch(updatedPitch);
+  }
 
-    // function editPitch() {
-    //     if(this.class)
-    // }
+  function downVote(event) {
+    event.stopPropagation();
+    let updatedPitch = $(this).data();
+    updatedPitch.score -= 1;
 
-    function createNewRow(pitch) {
-        var $newInputRow = $(
-            [
-                "<li class='list-group-item pitch-item'>",
-                "<button class='up-vote btn btn-primary'><i class='fas fa-arrow-up'></i></button>",
-                "<button class='down-vote btn btn-danger'><i class='fas fa-arrow-down'></i></button>",
-                "<span>",
-                pitch.text,
-                "</span>",
-                "</li>"
-            ].join("")
-        );
+    updatePitch(updatedPitch);
+  }
 
-        $newInputRow.find("button.up-vote").data("id", pitch.id);
-        $newInputRow.find("button.down-vote").data("id", pitch.id);
-        // $newInputRow.data("todo", todo);
-        // if (todo.complete) {
-        //     $newInputRow.find("span").css("text-decoration", "line-through");
-        // }
-        return $newInputRow;
-    }
+  function updatePitch(pitch) {
+    $.ajax({
+      method: "PUT",
+      url: "/api/pitches",
+      data: pitch
+    }).then(getPitches);
+  }
 
-    function insertPitch(event) {
-        event.preventDefault();
-        var pitch = {
-            text: $newPitchInput.val().trim(),
-            score: 0
-        };
+  function createNewRow(pitch) {
+    var $newInputRow = $(
+      [
+        "<li class='list-group-item pitch-item'>",
+        "<span style='margin-right:10px;'>",
+        pitch.score,
+        "</span>",
+        "<button class='up-vote btn btn-primary'><i class='fas fa-arrow-up'></i></button>",
+        "<button class='down-vote btn btn-danger'><i class='fas fa-arrow-down'></i></button>",
+        "<span>",
+        pitch.text,
+        "</span>",
+        "</li>"
+      ].join("")
+    );
 
-        $.post("/api/pitches", pitch);
+    $newInputRow.find("button.up-vote").data("id", pitch.id);
+    $newInputRow.find("button.up-vote").data("score", pitch.score);
+    $newInputRow.find("button.down-vote").data("id", pitch.id);
+    $newInputRow.find("button.down-vote").data("score", pitch.score);
+    $newInputRow.data("pitch", pitch);
+    
+    return $newInputRow;
+  }
 
-        $newPitchInput.val("");
-    }
+  function insertPitch(event) {
+    event.preventDefault();
+    var pitch = {
+      text: $newPitchInput.val().trim(),
+      score: 0
+    };
+
+    $.post("/api/pitches", pitch, getPitches);
+    $newPitchInput.val("");
+  }
 });

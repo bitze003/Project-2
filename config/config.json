@@ -9,7 +9,7 @@
   "test": {
     "username": "root",
     "password": "Password",
-    "database": "testdb",
+    "database": "bigIdea",
     "host": "localhost",
     "dialect": "mysql",
     "logging": false
