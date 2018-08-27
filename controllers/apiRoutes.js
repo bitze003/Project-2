@@ -18,7 +18,7 @@ module.exports = function(app) {
       res.json(dbPitch);
     });
   });
-  
+
   app.put("/api/pitches", function(req, res) {
     db.Pitch.update(
       {

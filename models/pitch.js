@@ -4,7 +4,6 @@ module.exports = function(sequelize, DataTypes) {
     score: DataTypes.INTEGER
   });
 
-
   Pitch.associate = function(models) {
     // a Pitch must belong to a User
     // a Pitch cannot be created without a User due to the foreign key constraint (?)
@@ -17,4 +16,3 @@ module.exports = function(sequelize, DataTypes) {
 
   return Pitch;
 };
-
