@@ -55,6 +55,17 @@ if (process.env.NODE_ENV === "test") {
   syncOptions.force = true;
 }
 
+if (process.env.JAWSDB_URL) {
+  connection = mysql.createConnection(process.env.JAWSDB_URL);
+} else {
+  connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'Password',
+    database: 'bigIdea'
+  });
+}
+
 // Starting the server, syncing our models ------------------------------------/
 db.sequelize.sync(syncOptions).then(function() {
   app.listen(PORT, function() {
