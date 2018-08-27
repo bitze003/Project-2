@@ -10,13 +10,26 @@ module.exports = function(app) {
     });
   });
 
-  // POST route for saving a new idea. We can create a todo using the data on req.body
   app.post("/api/pitches", function(req, res) {
     db.Pitch.create({
       text: req.body.text,
       score: req.body.score
     }).then(function(dbPitch) {
-      // We have access to the new todo as an argument inside of the callback function
+      res.json(dbPitch);
+    });
+  });
+  
+  app.put("/api/pitches", function(req, res) {
+    db.Pitch.update(
+      {
+        score: req.body.score
+      },
+      {
+        where: {
+          id: req.body.id
+        }
+      }
+    ).then(function(dbPitch) {
       res.json(dbPitch);
     });
   });
