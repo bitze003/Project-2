@@ -1,10 +1,13 @@
+
 $(document).ready(function () {
+
   var $newPitchInput = $("input.new-pitch");
   var $pitchContainer = $(".pitch-container");
   // event listeners
   $(document).on("click", "button.submit", insertPitch);
   $(document).on("click", "button.up-vote", upVote);
   $(document).on("click", "button.down-vote", downVote);
+
 
   var pitches = [];
 
@@ -17,6 +20,7 @@ $(document).ready(function () {
     for (var i = 0; i < pitches.length; i++) {
       rowsToAdd.push(createNewRow(pitches[i]));
     }
+
     
     console.log(rowsToAdd);
     $pitchContainer.append(rowsToAdd);
@@ -70,6 +74,29 @@ $(document).ready(function () {
         "<span>",
         pitch.text,
         "</span>",
+
+        `<div class='comment-container'>
+        <div class='commmentsAbove'>
+        <div class='col-sm-12 col-sm-offset-2'>
+        <br>
+          <h6>Comments</h6>
+          <hr>
+          <div id='comments-area'></div>
+        </div>
+
+      <div class='row'>
+        <div class='col-sm-12 col-sm-offset-2'>
+          <p class='cool-font'>Name</p>
+          <input class='form-control' type='text' id='author' placeholder='Enter Your Name'>
+          <br>
+          <p class='cool-font'>Comments</p>
+          <textarea class='form-control' rows='3' id='comments-box' placeholder='Enter comments Here!'></textarea>
+          <br>
+          <button id='comments-submit' data-pass-id=${pitch.id} class='btn btn-lg pull-right'>Submit!</button>
+        </div>
+      </div>
+      </div>
+        </div>`,
         "</li>"
       ].join("")
     );
@@ -93,11 +120,16 @@ $(document).ready(function () {
     $.post("/api/pitches", pitch, getPitches);
     $newPitchInput.val("");
   }
-
-  // $("#login").click(function(){
-  //   $('#modalLoginForm').modal()
-
-  // })
-
 });
 
+ //This is Where the comments code will begin
+  //For each idea, users will be able to comment their thoughts
+  //The code right below will open all the ideas and allow users to comment when clicked
+  $(document).on("click", "li.pitch-item", function (event) {
+    console.log("CLICKED" + " " + $(this));
+    // console.log("CLICKED")
+    // console.log(this);
+    $(".comment-container").css("display", "block");
+    // Make a newComments object
+    // ($(this).attr("#data-pitchid"))
+  });

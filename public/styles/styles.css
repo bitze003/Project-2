@@ -50,3 +50,10 @@ button.up-vote, button.down-vote{
 .list-group-item {
   line-height: 1;
 }
+.comment-container{
+  display:none;
+}
+
+.pitch-item{
+  cursor:pointer;
+}
