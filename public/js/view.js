@@ -93,4 +93,11 @@ $(document).ready(function () {
     $.post("/api/pitches", pitch, getPitches);
     $newPitchInput.val("");
   }
+
+  // $("#login").click(function(){
+  //   $('#modalLoginForm').modal()
+
+  // })
+
 });
+
