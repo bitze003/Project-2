@@ -15,18 +15,19 @@ module.exports = function(app, passport) {
     "/signup",
     passport.authenticate("local-signup", {
       successRedirect: "/",
-
       failureRedirect: "/"
     })
   );
   app.get("/logout", authController.logout);
 
-  app.post("/signin", passport.authenticate("local-signin", {
-    successRedirect: "/",
+  app.post(
+    "/signin",
+    passport.authenticate("local-signin", {
+      successRedirect: "/",
 
-    failureRedirect: "/"
-  })
-);
+      failureRedirect: "/"
+    })
+  );
 
   function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
